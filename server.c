@@ -6,7 +6,7 @@
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 03:11:54 by msekhsou          #+#    #+#             */
-/*   Updated: 2022/12/17 03:34:10 by msekhsou         ###   ########.fr       */
+/*   Updated: 2022/12/17 20:19:31 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_bintoasc(int sig)
 	c = c << 1;
 }
 
-int main(void)
+int	main(void)
 {
 	pid_t	pid;
 

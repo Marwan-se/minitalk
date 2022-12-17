@@ -6,24 +6,25 @@
 #    By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/17 03:07:55 by msekhsou          #+#    #+#              #
-#    Updated: 2022/12/17 03:07:57 by msekhsou         ###   ########.fr        #
+#    Updated: 2022/12/17 14:23:59 by msekhsou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = Minitalk
+NAME1 = server
+NAME2 = client
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
-SRC = server.c client.c Minitalk_utils.c
+INC = Minitalk.h
+SRC = Minitalk_utils.c
 OBJ = $(SRC:.c=.o)
 
-all: $(NAME)
+all:$(NAME1) $(NAME2)
 
-%.o: %.c Minitalk.h
-		$(CC) $(CFLAGS) -o $@ -c $<
-		
-$(NAME): $(OBJ)
-		ar rc $(NAME) $(OBJ)
+$(NAME1) : server.c $(INC)
+	 		$(CC) $(CFLAGS) server.c $(SRC) -o server
+$(NAME2) : client.c $(INC)
+			$(CC) $(CFLAGS) client.c $(SRC) -o client
 
 clean:
 		$(RM) $(OBJ)

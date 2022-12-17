@@ -6,7 +6,7 @@
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 03:11:34 by msekhsou          #+#    #+#             */
-/*   Updated: 2022/12/17 03:11:35 by msekhsou         ###   ########.fr       */
+/*   Updated: 2022/12/17 20:19:06 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_atoi(const char *str)
 	return (res * sign);
 }
 
-void ft_putstr(char *s)
+void	ft_putstr(char *s)
 {
 	int	i;
 
