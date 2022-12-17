@@ -5,49 +5,41 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/11 21:10:52 by msekhsou          #+#    #+#             */
-/*   Updated: 2022/12/16 10:44:00 by msekhsou         ###   ########.fr       */
+/*   Created: 2022/12/17 03:11:54 by msekhsou          #+#    #+#             */
+/*   Updated: 2022/12/17 03:34:10 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minitalk.h"
 
-void	bin_to_asci(int signum, siginfo_t *info, void *context)
+void	ft_bintoasc(int sig)
 {
-	static int	g_pid = 0;
-	static char	c = 0xFF;
-	static int	bit = 0;	
+	static char	c;
+	static int	bit;
 
-	(void) context;
-	// if (g_pid != info->si_pid)
-	// {
-	// 	c = 0;
-	// 	bit = 0;
-	// 	g_pid = info->si_pid;
-	// }
-	if (signum == SIGUSR1)
-		c |= 0x80 >> bit;
-	if (signum == SIGUSR2)
-		c ^= 0x80 >> bit; 
-	if (bit++ == 8)
+	if (sig == SIGUSR1)
+		c |= 1;
+	bit++;
+	if (bit == 8)
 	{
-		ft_putchar(c);
+		write (1, &c, 1);
 		bit = 0;
-		c = 0xFF;
+		c = 0;
 	}
+	c = c << 1;
 }
 
 int main(void)
 {
-	struct sigaction	sa;
+	pid_t	pid;
 
-	sa.sa_sigaction = bin_to_asci;
-	sa.sa_flags = SA_SIGINFO;
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
+	signal(SIGUSR1, &ft_bintoasc);
+	signal(SIGUSR2, &ft_bintoasc);
+	pid = getpid();
 	ft_putstr("PID : ");
-	ft_putnbr(getpid());
+	ft_putnbr(pid);
 	ft_putchar('\n');
 	while (1)
 		pause();
+	return (0);
 }

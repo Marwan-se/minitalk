@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/12 16:57:02 by msekhsou          #+#    #+#              #
-#    Updated: 2022/12/16 06:47:01 by msekhsou         ###   ########.fr        #
+#    Created: 2022/12/17 03:07:55 by msekhsou          #+#    #+#              #
+#    Updated: 2022/12/17 03:07:57 by msekhsou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,4 +30,5 @@ clean:
 fclean: clean
 		$(RM) $(NAME)
 re: fclean all
+
 .PHONY: all clean fclean
