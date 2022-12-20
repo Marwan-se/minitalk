@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/17 03:11:54 by msekhsou          #+#    #+#             */
-/*   Updated: 2022/12/20 20:32:07 by msekhsou         ###   ########.fr       */
+/*   Created: 2022/12/20 19:58:42 by msekhsou          #+#    #+#             */
+/*   Updated: 2022/12/20 20:32:16 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Minitalk.h"
+#include "Minitalk_bonus.h"
 
-void	ft_bintoasc(int signum, siginfo_t *info, void *context)
+void	ft_msgsent(int pid, int signum)
+{
+	if (kill(pid, signum) == -1)
+		exit(EXIT_FAILURE);
+}
+
+void	bta(int signum, siginfo_t *info, void *context)
 {
 	static int	g_pid = 0;
 	static char	c = 0xFF;
@@ -26,26 +32,29 @@ void	ft_bintoasc(int signum, siginfo_t *info, void *context)
 		g_pid = info->si_pid;
 	}
 	if (signum == SIGUSR1)
-	{
 		c |= 0x80 >> bit;
-	}
 	else if (signum == SIGUSR2)
-	{
 		c ^= 0x80 >> bit;
-	}
 	if (bit++ == 8)
 	{
+		if (!c)
+			ft_msgsent(g_pid, SIGUSR1);
 		ft_putchar(c);
 		bit = 0;
 		c = 0xFF;
 	}
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	struct sigaction	sa;
 
-	sa.sa_sigaction = ft_bintoasc;
+	if (ac != 1 || av[1] != NULL)
+	{
+		write(1, "error\n", 6);
+		exit(1);
+	}
+	sa.sa_sigaction = bta;
 	sa.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);

@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msekhsou <msekhsou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/17 03:11:06 by msekhsou          #+#    #+#             */
-/*   Updated: 2022/12/20 15:32:53 by msekhsou         ###   ########.fr       */
+/*   Created: 2022/12/20 19:58:36 by msekhsou          #+#    #+#             */
+/*   Updated: 2022/12/20 20:33:37 by msekhsou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"Minitalk.h"
+#include "Minitalk_bonus.h"
 
-void	ft_asci_to_bin(pid_t pid, char *s)
+void	msg_done(int signum)
+{
+	if (signum == SIGUSR1)
+		ft_putstr("\nwell done\n");
+}
+
+void	binary(int pid, char *s)
 {
 	int	i;
 	int	bit;
@@ -33,7 +39,7 @@ void	ft_asci_to_bin(pid_t pid, char *s)
 			else
 				if (kill(pid, SIGUSR2) == -1)
 					exit(1);
-			usleep(400);
+			usleep(300);
 		}
 		if (!s[i])
 			break ;
@@ -50,12 +56,13 @@ int	main(int ac, char **av)
 		write(1, "error\n", 6);
 		exit(1);
 	}
+	signal(SIGUSR1, msg_done);
 	pid = ft_atoi(av[1]);
 	if (pid == -1)
 	{
 		write(1, "error\n", 6);
 		exit(1);
 	}
-	ft_asci_to_bin(pid, av[2]);
+	binary(pid, av[2]);
 	return (0);
 }
